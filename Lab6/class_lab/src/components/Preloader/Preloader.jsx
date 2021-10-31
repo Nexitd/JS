@@ -1,8 +1,10 @@
 import React from "react";
 import loading from "../../assets/loading-48.gif";
 
-const Preloader = () => {
-  return <img src={loading} alt='' />;
-};
+class Preloader extends React.Component {
+  render() {
+    return <img src={loading} alt='' />
+  }
+}
 
 export default Preloader;
