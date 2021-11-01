@@ -6,9 +6,10 @@ import styles from "./UserList.module.css";
 
 const UserList = () => {
 	const [usersData, setUsersData] = useState([]);
-	const [initialLoading, setInitialLoading] = useState(true);
+	const [initialLoading, setInitialLoading] = useState(false);
 
 	const getData = () => {
+		setInitialLoading(true);
 		fetch("https://randomuser.me/api/?results=5", {
 			method: "GET",
 		})
@@ -19,12 +20,14 @@ const UserList = () => {
 			});
 	};
 
-	console.log(initialLoading);
-
 	return (
 		<div>
-			<h1 style={{ textAlign: "center" }}>There are no users</h1>
-			<Button onClick={getData} />
+			{usersData.length === 0 && (
+				<>
+					<h1 style={{ textAlign: "center" }}>There are no users</h1>
+					<Button onClick={getData} />
+				</>
+			)}
 
 			<div className={styles.cards}>
 				<Preloader style={{ display: initialLoading ? "block" : "none" }} />

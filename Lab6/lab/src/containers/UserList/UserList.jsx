@@ -16,33 +16,33 @@ const UserList = () => {
 
 	return (
 		<div>
-			{usersData.length === 0 ? (
+			{usersData.length === 0 && (
 				<>
 					<h1 style={{ textAlign: "center" }}>There are no users</h1>
 					<Button onClick={getData} />
 				</>
-			) : (
-				<div className={styles.cards}>
-					{initialLoading ? (
-						<Preloader />
-					) : (
-						usersData.map((user, index) => {
-							return (
-								<UserCard
-									key={index}
-									name={user.name}
-									img={user.picture.medium}
-									gender={user.gender}
-									dob={user.dob}
-									location={user.location}
-									email={user.email}
-									phone={user.phone}
-								/>
-							);
-						})
-					)}
-				</div>
 			)}
+
+			<div className={styles.cards}>
+				{initialLoading ? (
+					<Preloader />
+				) : (
+					usersData.map((user, index) => {
+						return (
+							<UserCard
+								key={index}
+								name={user.name}
+								img={user.picture.medium}
+								gender={user.gender}
+								dob={user.dob}
+								location={user.location}
+								email={user.email}
+								phone={user.phone}
+							/>
+						);
+					})
+				)}
+			</div>
 		</div>
 	);
 };
