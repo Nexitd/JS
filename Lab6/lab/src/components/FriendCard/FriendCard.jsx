@@ -1,59 +1,26 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Avatar from "../Avatar/Avatar";
+import { useDispatch } from "react-redux";
+import { removeFriends } from "../../store/reducers/bestFriends";
 import { getGender } from "../../Utils/getGender";
 import { parseDate } from "../../Utils/parseDate";
-import {
-  addToFriendList,
-  checkIsInList,
-} from "../../store/reducers/bestFriends";
-import styles from "./UserCard.module.css";
-import { useState } from "react";
+import Avatar from "../Avatar/Avatar";
+import styles from "./FriendCard.module.css";
 
-const UserCard = ({
-  userObject,
-  img,
-  name,
-  id,
-  gender,
-  dob,
-  location,
-  email,
-  phone,
-  friends,
-}) => {
-  const { isInList, inFriendList } = useSelector(
-    (state) => state.friends
-  );
+const FriendCard = ({ img, user, name, gender, dob, location, email, phone }) => {
+    const dispatch = useDispatch();
 
-
-
-  const dispatch = useDispatch();
-
-  const addFriend = (obj) => {
-    dispatch(checkIsInList(obj));
-    
-    if (isInList === false) {
-      dispatch(addToFriendList(obj));
-      obj["friend"] = "friend"
-      dispatch(checkIsInList(obj));
+    const removeFriend = () => {
+        dispatch(removeFriends(user))
     }
-  };
 
   return (
-    <div className={styles.card} key={id}>
+    <div className={styles.card}>
       <div className={styles.cardHead}>
         <Avatar image={img} />
-        {/* <span>{userObject.friend}</span> */}
         <h3 className={styles.headTitle}>
           {name.title} {name.first} {name.last}
         </h3>
-
-        {inFriendList === false && (
-          <button onClick={() => addFriend(userObject)}>
-            Add to best friends
-          </button>
-        )}
+        <button onClick={() => removeFriend(user)}>Remove friend</button>
       </div>
       <div className={styles.cardBody}>
         <div className={styles.bodyItem}>
@@ -82,4 +49,4 @@ const UserCard = ({
   );
 };
 
-export default UserCard;
+export default FriendCard;

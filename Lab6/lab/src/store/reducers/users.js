@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getUsersData = createAsyncThunk("users/getUsersData", async () => {
-  const data = await axios.get("https://randomuser.me/api/?results=5");
+  const data = await axios.get("https://randomuser.me/api/?results=10");
 
   return data.data.results;
 });
