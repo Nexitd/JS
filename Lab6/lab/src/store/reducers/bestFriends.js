@@ -5,7 +5,6 @@ export const bestFriends = createSlice({
   initialState: {
     friendsArr: [],
     isInList: false,
-    inFriendList: false,
   },
 
   reducers: {
@@ -27,21 +26,6 @@ export const bestFriends = createSlice({
         }
       });
     },
-
-    checkIsInList: (state, obj) => {
-      state.friendsArr.forEach((el) => {
-        if (
-          el.name.first === obj.payload.name.first &&
-          el.name.last === obj.payload.name.last
-        ) {
-          state.inList = true;
-          state.inFriendList = true;
-        } else {
-          state.inList = false;
-          state.inFriendList = false;
-        }
-      });
-    },
   },
 });
 
@@ -49,7 +33,3 @@ export const { addToFriendList, checkIsInList, getFriends, removeFriends } =
   bestFriends.actions;
 
 export default bestFriends.reducer;
-
-
-
-

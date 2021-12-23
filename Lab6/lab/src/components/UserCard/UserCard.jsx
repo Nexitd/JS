@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../Avatar/Avatar";
 import { getGender } from "../../Utils/getGender";
@@ -8,7 +8,6 @@ import {
   checkIsInList,
 } from "../../store/reducers/bestFriends";
 import styles from "./UserCard.module.css";
-import { useState } from "react";
 
 const UserCard = ({
   userObject,
@@ -20,36 +19,38 @@ const UserCard = ({
   location,
   email,
   phone,
-  friends,
 }) => {
-  const { isInList, inFriendList } = useSelector(
-    (state) => state.friends
-  );
-
-
-
+  const { friendsArr } = useSelector((state) => state.friends);
+  const [friend, setFriend] = useState(false);
   const dispatch = useDispatch();
 
-  const addFriend = (obj) => {
-    dispatch(checkIsInList(obj));
-    
-    if (isInList === false) {
-      dispatch(addToFriendList(obj));
-      obj["friend"] = "friend"
-      dispatch(checkIsInList(obj));
+  const isInList = (obj) => {
+    for (let el of friendsArr) {
+      if (el.name.first === obj.name.first && el.name.last === obj.name.last) {
+        setFriend(true);
+      }
     }
+  };
+
+  useEffect(() => {
+    isInList(userObject);
+  }, [userObject]);
+
+  const addFriend = (obj) => {
+    dispatch(addToFriendList(obj));
+    setFriend(true);
   };
 
   return (
     <div className={styles.card} key={id}>
       <div className={styles.cardHead}>
         <Avatar image={img} />
-        {/* <span>{userObject.friend}</span> */}
+        <span>{friend ? "В друзьях" : "Не в друзьях"}</span>
         <h3 className={styles.headTitle}>
           {name.title} {name.first} {name.last}
         </h3>
 
-        {inFriendList === false && (
+        {friend === false && (
           <button onClick={() => addFriend(userObject)}>
             Add to best friends
           </button>
